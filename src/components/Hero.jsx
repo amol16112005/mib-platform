@@ -32,11 +32,12 @@ export default function Hero() {
           <div>
             <p className="kicker on-dark">KLE Technological University · Hubballi</p>
             <h1>Find an MIB event and join it.</h1>
-            <p className="deck">
+            <p className="deck deck-long">
               Make in BVB is the student body for building, pitching, and the
               quadrangle nights in between. The stills are the campus. The
               one-sheets are the events.
             </p>
+            <p className="deck deck-short">Student events at KLE Tech, Hubballi.</p>
             <div className="hero-actions">
               <a className="button" href="#events">
                 See the board

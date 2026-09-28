@@ -696,6 +696,7 @@ section, .register, .detail { scroll-margin-top: calc(var(--nav-h) + 0.75rem); }
 }
 .cinema h1 { font-size: clamp(2.8rem, 4.8vw, 4.8rem); color: white; }
 .cinema .deck { color: rgba(246, 241, 232, 0.84); max-width: 36rem; }
+.deck-short { display: none; }
 .kicker.on-dark { color: #e7b56a; }
 .cinema-caption {
   position: absolute;
@@ -799,8 +800,41 @@ section, .register, .detail { scroll-margin-top: calc(var(--nav-h) + 0.75rem); }
 @media (max-width: 760px) {
   .sheet { flex-basis: 78%; }
   .detail-gallery { position: static; }
-  .cinema { min-height: 100svh; }
-  .cinema h1 { font-size: clamp(2.7rem, 12vw, 3.6rem); }
+  .cinema {
+    height: auto;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 0 1.15rem;
+  }
+  .cinema-shade {
+    background: linear-gradient(to top, rgba(8, 6, 4, 0.97) 0%, rgba(8, 6, 4, 0.82) 28%, rgba(8, 6, 4, 0.28) 58%, rgba(8, 6, 4, 0.08) 78%);
+  }
+  .cinema-copy {
+    width: auto;
+    margin-top: auto;
+    padding: calc(var(--nav-h) + 0.8rem) 1.15rem 0;
+  }
+  .title-row { gap: 0.85rem; }
+  .brand-plate { width: 4.6rem; border-radius: 0.85rem; }
+  .cinema .kicker { margin-bottom: 0.35rem; }
+  .cinema h1 { font-size: 2.45rem; }
+  .deck-long { display: none; }
+  .deck-short { display: block; font-size: 1rem; }
+  .cinema .hero-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; margin-top: 1rem; }
+  .cinema .hero-actions .button { width: 100%; padding-inline: 0.6rem; }
+  .cinema-caption {
+    position: static;
+    margin: 1.15rem 1.15rem 0;
+    max-width: none;
+  }
+  .cinema-caption p { display: none; }
+  .cinema-caption strong { font-size: 1.2rem; }
+  .cinema-strip {
+    position: static;
+    margin: 0.65rem 1.15rem 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
