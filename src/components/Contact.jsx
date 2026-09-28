@@ -85,7 +85,7 @@ export default function Contact() {
         <div className="contact-card contact-wide">
           <h3>Interest saved on this device</h3>
           <p className="quiet">
-            The organiser copy is organizer/MIB-registrations.xlsx. Open that file in Excel.
+            On the live site, registrations go to the organiser’s Google Sheet. This list is only what this browser saved.
           </p>
           {interest.length === 0 ? (
             <p className="quiet">Nothing yet. Register from an event and it will land here.</p>

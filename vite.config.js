@@ -112,8 +112,22 @@ async function handleRegistration(request, response, next) {
       return;
     }
     await appendRegistration(entry);
+    const webhook = process.env.SHEET_WEBHOOK_URL;
+    if (webhook) {
+      const sheetResponse = await fetch(webhook, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(entry),
+      });
+      if (!sheetResponse.ok) {
+        response.statusCode = 502;
+        response.setHeader("Content-Type", "application/json");
+        response.end(JSON.stringify({ ok: false, error: "The organiser sheet did not accept this registration." }));
+        return;
+      }
+    }
     response.setHeader("Content-Type", "application/json");
-    response.end(JSON.stringify({ ok: true }));
+    response.end(JSON.stringify({ ok: true, where: webhook ? "google-sheet" : "local-excel" }));
   } catch (error) {
     console.error(error);
     const locked = error?.code === "EBUSY" || error?.code === "EPERM";

@@ -53,6 +53,7 @@ export default function InterestForm({ event, intent }) {
       eventName: event.name,
       intent,
     };
+    let where = "local-excel";
     try {
       const response = await fetch("/api/register", {
         method: "POST",
@@ -64,12 +65,13 @@ export default function InterestForm({ event, intent }) {
         setErrors({ form: payload.error || "Could not add this to the organiser sheet." });
         return;
       }
+      where = payload.where || where;
     } catch {
-      setErrors({ form: "Could not reach the organiser sheet. Is the site running with npm run dev?" });
+      setErrors({ form: "Could not reach the organiser sheet." });
       return;
     }
     saveInterest(entry);
-    setSaved(entry);
+    setSaved({ ...entry, where });
   };
 
   if (saved) {
@@ -80,7 +82,9 @@ export default function InterestForm({ event, intent }) {
           {saved.name}, you’re on the list for {saved.eventName}.
         </h3>
         <p>
-          This row is in the organiser sheet, organizer/MIB-registrations.xlsx. If that file is already open in Excel, close it and open it again to see the new row.
+          {saved.where === "google-sheet"
+            ? "This row is in the organiser’s Google Sheet. You can open that sheet from any device, or download it as Excel."
+            : "This row is in organizer/MIB-registrations.xlsx on this computer. If that file is already open in Excel, close it and open it again."}
         </p>
         <button type="button" className="button ghost" onClick={() => setSaved(null)}>
           Add someone else
