@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { accounts, getEvent } from "./data";
 import About from "./components/About";
 import Contact from "./components/Contact";
@@ -40,12 +40,15 @@ export default function App() {
   const eventId = hash.startsWith("#event/") ? decodeURIComponent(hash.slice("#event/".length)) : "";
   const event = eventId ? getEvent(eventId) : null;
 
-  useLayoutEffect(() => {
-    if (eventId || !hash || hash === "#top") {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      return;
-    }
-    scrollBelowNav(hash.slice(1));
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      if (eventId || !hash || hash === "#top") {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        return;
+      }
+      scrollBelowNav(hash.slice(1));
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, [hash, eventId]);
 
   return (

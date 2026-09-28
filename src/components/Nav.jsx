@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { shots } from "../data";
+import { scrollBelowNav } from "../scroll";
 
 const links = [
   { href: "#events", label: "Events" },
@@ -38,6 +39,13 @@ export default function Nav() {
   const atTop = hash === "#top" || hash === "";
   const ghost = atTop && !scrolled && !open;
 
+  const go = (href) => {
+    setOpen(false);
+    if ((window.location.hash || "#top") === href) {
+      window.requestAnimationFrame(() => scrollBelowNav(href.slice(1)));
+    }
+  };
+
   return (
     <header className={`nav ${ghost ? "ghost" : "solid"}`}>
       <a className="brand" href="#top">
@@ -63,6 +71,7 @@ export default function Nav() {
           <a
             key={link.href}
             href={link.href}
+            onClick={() => go(link.href)}
             aria-current={
               link.href === "#events"
                 ? onEvents
@@ -76,7 +85,7 @@ export default function Nav() {
             {link.label}
           </a>
         ))}
-        <a className="nav-cta" href="#events">
+        <a className="nav-cta" href="#events" onClick={() => go("#events")}>
           Join an event
         </a>
       </nav>

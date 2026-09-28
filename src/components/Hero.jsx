@@ -50,26 +50,28 @@ export default function Hero() {
         </div>
       </div>
       <p className="edge-code">Make in BVB · Hubballi</p>
-      <div className="cinema-caption">
-        <span>
-          {String(index + 1).padStart(2, "0")} / {String(heroFrames.length).padStart(2, "0")}
-        </span>
-        <strong>{frame.kicker}</strong>
-        <p>{frame.caption}</p>
-      </div>
-      <div className="cinema-strip" role="tablist" aria-label="Campus and poster frames">
-        {heroFrames.map((item, itemIndex) => (
-          <button
-            key={item.src}
-            type="button"
-            role="tab"
-            aria-selected={itemIndex === index}
-            aria-label={item.kicker}
-            onClick={() => setIndex(itemIndex)}
-          >
-            <img src={item.src} alt="" />
-          </button>
-        ))}
+      <div className="cinema-bar">
+        <div className="cinema-caption">
+          <span>
+            {String(index + 1).padStart(2, "0")} / {String(heroFrames.length).padStart(2, "0")}
+          </span>
+          <strong>{frame.kicker}</strong>
+          <p>{frame.caption}</p>
+        </div>
+        <div className="cinema-strip" role="tablist" aria-label="Campus frames">
+          {heroFrames.map((item, itemIndex) => (
+            <button
+              key={item.src}
+              type="button"
+              role="tab"
+              aria-selected={itemIndex === index}
+              aria-label={item.kicker}
+              onClick={() => setIndex(itemIndex)}
+            >
+              <img src={item.src} alt="" />
+            </button>
+          ))}
+        </div>
       </div>
     </section>
   );
