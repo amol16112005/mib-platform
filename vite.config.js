@@ -116,10 +116,12 @@ async function handleRegistration(request, response, next) {
     if (webhook) {
       const sheetResponse = await fetch(webhook, {
         method: "POST",
+        redirect: "manual",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(entry),
       });
-      if (!sheetResponse.ok) {
+      const accepted = sheetResponse.ok || (sheetResponse.status >= 300 && sheetResponse.status < 400);
+      if (!accepted) {
         response.statusCode = 502;
         response.setHeader("Content-Type", "application/json");
         response.end(JSON.stringify({ ok: false, error: "The organiser sheet did not accept this registration." }));

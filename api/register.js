@@ -22,10 +22,13 @@ export default async function handler(request, response) {
   try {
     const sheetResponse = await fetch(webhook, {
       method: "POST",
+      redirect: "manual",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(entry),
     });
-    if (!sheetResponse.ok) {
+    const accepted =
+      sheetResponse.ok || (sheetResponse.status >= 300 && sheetResponse.status < 400);
+    if (!accepted) {
       response.status(502).json({
         ok: false,
         error: "The organiser sheet did not accept this registration.",
