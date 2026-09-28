@@ -18,7 +18,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-padding-top: calc(var(--nav-h) + 0.75rem); }
+html { scroll-padding-top: var(--nav-h); }
 body {
   margin: 0;
   overflow-x: hidden;
@@ -62,7 +62,7 @@ p { margin: 0; }
   border-bottom: 1px solid transparent;
 }
 .nav.solid {
-  background: rgba(12, 10, 8, 0.92);
+  background: #0c0a08;
   color: #f6f1e8;
   border-bottom-color: rgba(246, 241, 232, 0.08);
 }
@@ -129,7 +129,7 @@ p { margin: 0; }
 }
 
 main { width: min(var(--wrap), calc(100% - 2.5rem)); margin: 0 auto; }
-section, .register, .detail { scroll-margin-top: calc(var(--nav-h) + 0.75rem); }
+section, .register, .detail { scroll-margin-top: var(--nav-h); }
 
 .hero {
   display: grid;
@@ -535,7 +535,7 @@ section, .register, .detail { scroll-margin-top: calc(var(--nav-h) + 0.75rem); }
 .detail-body ul { margin: 0.3rem 0 0; padding-left: 1.1rem; display: grid; gap: 0.4rem; }
 .source-line { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
 .source-line a { color: var(--rust-deep); }
-.register { scroll-margin-top: calc(var(--nav-h) + 0.75rem); }
+.register { scroll-margin-top: var(--nav-h); }
 .missing { min-height: 50vh; display: grid; align-content: center; gap: 0.8rem; padding: 3rem 0; }
 
 .footer {
@@ -686,7 +686,7 @@ section, .register, .detail { scroll-margin-top: calc(var(--nav-h) + 0.75rem); }
 }
 .cinema-copy {
   position: relative;
-  z-index: 2;
+  z-index: 4;
   pointer-events: none;
   width: min(1180px, calc(100% - 8vw));
   padding: calc(var(--nav-h) + 2.4rem) 0 0 5vw;

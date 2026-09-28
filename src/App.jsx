@@ -30,7 +30,11 @@ export default function App() {
   useEffect(() => {
     const sync = () => setHash(window.location.hash || "#top");
     window.addEventListener("hashchange", sync);
-    return () => window.removeEventListener("hashchange", sync);
+    window.addEventListener("popstate", sync);
+    return () => {
+      window.removeEventListener("hashchange", sync);
+      window.removeEventListener("popstate", sync);
+    };
   }, []);
 
   useEffect(() => {

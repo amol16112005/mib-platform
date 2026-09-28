@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { heroFrames, shots } from "../data";
-import { scrollBelowNav } from "../scroll";
+import { openHash } from "../scroll";
 
 const FRAME_MS = 5600;
 
@@ -19,9 +19,7 @@ export default function Hero() {
 
   const jump = (click, id) => {
     click.preventDefault();
-    const next = `#${id}`;
-    if (window.location.hash !== next) window.location.hash = next;
-    window.requestAnimationFrame(() => scrollBelowNav(id));
+    openHash(`#${id}`);
   };
 
   return (

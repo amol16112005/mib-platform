@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { shots } from "../data";
-import { scrollBelowNav } from "../scroll";
+import { openHash } from "../scroll";
 
 const links = [
   { href: "#events", label: "Events" },
@@ -20,7 +20,11 @@ export default function Nav() {
       setOpen(false);
     };
     window.addEventListener("hashchange", sync);
-    return () => window.removeEventListener("hashchange", sync);
+    window.addEventListener("popstate", sync);
+    return () => {
+      window.removeEventListener("hashchange", sync);
+      window.removeEventListener("popstate", sync);
+    };
   }, []);
 
   useEffect(() => {
@@ -39,16 +43,15 @@ export default function Nav() {
   const atTop = hash === "#top" || hash === "";
   const ghost = atTop && !scrolled && !open;
 
-  const go = (href) => {
+  const go = (click, href) => {
+    click.preventDefault();
     setOpen(false);
-    if ((window.location.hash || "#top") === href) {
-      window.requestAnimationFrame(() => scrollBelowNav(href.slice(1)));
-    }
+    openHash(href);
   };
 
   return (
     <header className={`nav ${ghost ? "ghost" : "solid"}`}>
-      <a className="brand" href="#top">
+      <a className="brand" href="#top" onClick={(click) => go(click, "#top")}>
         <span className="logo-clip">
           <img src={shots.logo} alt="" />
         </span>
@@ -71,7 +74,7 @@ export default function Nav() {
           <a
             key={link.href}
             href={link.href}
-            onClick={() => go(link.href)}
+            onClick={(click) => go(click, link.href)}
             aria-current={
               link.href === "#events"
                 ? onEvents
@@ -85,7 +88,7 @@ export default function Nav() {
             {link.label}
           </a>
         ))}
-        <a className="nav-cta" href="#events" onClick={() => go("#events")}>
+        <a className="nav-cta" href="#events" onClick={(click) => go(click, "#events")}>
           Join an event
         </a>
       </nav>
