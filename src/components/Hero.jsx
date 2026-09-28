@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { heroFrames, shots } from "../data";
+import { scrollBelowNav } from "../scroll";
 
 const FRAME_MS = 5600;
 
@@ -15,6 +16,13 @@ export default function Hero() {
     }, FRAME_MS);
     return () => window.clearInterval(timer);
   }, []);
+
+  const jump = (click, id) => {
+    click.preventDefault();
+    const next = `#${id}`;
+    if (window.location.hash !== next) window.location.hash = next;
+    window.requestAnimationFrame(() => scrollBelowNav(id));
+  };
 
   return (
     <section className="cinema" id="top">
@@ -39,10 +47,10 @@ export default function Hero() {
             </p>
             <p className="deck deck-short">Student events at KLE Tech, Hubballi.</p>
             <div className="hero-actions">
-              <a className="button" href="#events">
+              <a className="button" href="#events" onClick={(click) => jump(click, "events")}>
                 See the board
               </a>
-              <a className="button ghost light" href="#about">
+              <a className="button ghost light" href="#about" onClick={(click) => jump(click, "about")}>
                 What MIB is
               </a>
             </div>
@@ -69,6 +77,7 @@ export default function Hero() {
               onClick={() => setIndex(itemIndex)}
             >
               <img src={item.src} alt="" />
+              <span>{item.kicker}</span>
             </button>
           ))}
         </div>
